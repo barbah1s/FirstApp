@@ -62,7 +62,7 @@ fun ProfileCard() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "ИИ",
+                    text = "АИ",
                     color = Color.White,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold
@@ -78,7 +78,7 @@ fun ProfileCard() {
             )
 
             Text(
-                text = "Иванов Иван Иванович",
+                text = "Алексей Иванов",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 4.dp)
@@ -121,6 +121,7 @@ fun ProfileCard() {
     }
 }
 
+//Показатели
 @Composable
 fun Stat(
     number: String,
