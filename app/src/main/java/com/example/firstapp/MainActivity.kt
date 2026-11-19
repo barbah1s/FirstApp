@@ -27,12 +27,23 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.activity.ComponentActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.text.style.TextAlign
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProfileCard()
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    //1лаба
+                    //ProfileCard()
+                    //2лаба
+                    TemperatureScreen()
+                }
+            }
         }
     }
 }
@@ -156,4 +167,77 @@ fun Stat(
 @Composable
 fun ProfileCardPreview() {
     ProfileCard()
+}
+
+@Composable
+fun TemperatureScreen() {
+
+    // Текущая температура (начальное значение 22)
+    var temperature by remember { mutableIntStateOf(22) }
+
+    // Текст для Card в зависимости от температуры
+    val statusText = when {
+        temperature < 20 -> "Прохладная\nтемпература"
+        temperature <= 25 -> "Комфортная\nтемпература"
+        else -> "Жаркая\nтемпература"
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // Заголовок
+        Text(
+            text = "Температура",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        // Показ текущего значения
+        Text(
+            text = "$temperature °C",
+            fontSize = 64.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(Modifier.height(24.dp))
+
+        // Кнопки «−» и «+»
+        Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+            Button(
+                onClick = { if (temperature > 16) temperature-- },
+                enabled = temperature > 16
+            ) {
+                Text("−", fontSize = 24.sp)
+            }
+
+            Button(
+                onClick = { if (temperature < 30) temperature++ },
+                enabled = temperature < 30
+            ) {
+                Text("+", fontSize = 24.sp)
+            }
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        // Card с описанием температуры
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = statusText,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp
+            )
+        }
+
+        Spacer(Modifier.weight(1f))
+    }
 }
